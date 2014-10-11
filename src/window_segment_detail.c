@@ -19,7 +19,7 @@ static TextLayer *s_textHighway;
 
 static void initialise_ui(void) {
   s_window = window_create();
-  window_set_fullscreen(s_window, false);
+  window_set_fullscreen(s_window, 0);
   
   s_res_gothic_28_bold = fonts_get_system_font(FONT_KEY_GOTHIC_28_BOLD);
   s_res_gothic_18_bold = fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD);
@@ -116,7 +116,11 @@ void show_window_segment_detail(int highway, int segment) {
   });
   
   text_layer_set_text(s_textHighway, HIGHWAYS[highwayId].name);
-  text_layer_set_text(s_textSegment, get_segments(highwayId)[segmentId]);
+  text_layer_set_text(s_textSegment, SEGMENTS[highwayId][segmentId]);
+  
+  Segment seg = get_segment_data(highway, segment);
+  text_layer_set_text(s_textNorthValue, VOLUMES[seg.north]);
+  text_layer_set_text(s_textSouthValue, VOLUMES[seg.south]);
   
   window_stack_push(s_window, true);
 }

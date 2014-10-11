@@ -1,10 +1,7 @@
 {
     "appKeys": {
-        "command": 0,
-        "highway": 1,
-        "north": 3,
-        "segment": 2,
-        "south": 4
+        "data": 0,
+        "error": 1
     },
     "capabilities": [
         ""

@@ -4,12 +4,12 @@
 #define NUM_SEGMENT_EDSA         37
 #define NUM_SEGMENT_C5           19
 #define NUM_SEGMENT_ORTIGAS      15
-#define NUM_SEGMENT_COMMONWEALTH 12
-#define NUM_SEGMENT_QUEZONAVE    25
-#define NUM_SEGMENT_ESPANA       8
-#define NUM_SEGMENT_ROXAS        12
-#define NUM_SEGMENT_SLEX         7
-#define NUM_SEGMENT_MARCOSHWY    7
+#define NUM_SEGMENT_COMMONWEALTH 0 /*12*/
+#define NUM_SEGMENT_QUEZONAVE    0 /*25*/
+#define NUM_SEGMENT_ESPANA       0 /*8*/
+#define NUM_SEGMENT_ROXAS        0 /*12*/
+#define NUM_SEGMENT_SLEX         0 /*7*/
+#define NUM_SEGMENT_MARCOSHWY    0 /*7*/
   
 #define HIGHWAY_EDSA         0
 #define HIGHWAY_C5           1
@@ -27,10 +27,10 @@ typedef struct {
 } Highway;
 
 typedef struct {
-  char *name;
+  const char *name;
   int id;
-  int north;
-  int south;
+  unsigned char north;
+  unsigned char south;
 } Segment;
 
 
@@ -39,12 +39,18 @@ extern const Highway HIGHWAYS[NUM_HIGHWAY];
 extern const char* SEGMENTS_EDSA[NUM_SEGMENT_EDSA];
 extern const char* SEGMENTS_C5[NUM_SEGMENT_C5];
 extern const char* SEGMENTS_ORTIGAS[NUM_SEGMENT_ORTIGAS];
-extern const char* SEGMENTS_COMMONWEALTH[0];
-extern const char* SEGMENTS_QUEZONAVE[0];
-extern const char* SEGMENTS_ESPANA[0];
-extern const char* SEGMENTS_ROXAS[0];
-extern const char* SEGMENTS_SLEX[0];
-extern const char* SEGMENTS_MARCOSHWY[0];
+extern const char* SEGMENTS_COMMONWEALTH[NUM_SEGMENT_COMMONWEALTH];
+extern const char* SEGMENTS_QUEZONAVE[NUM_SEGMENT_QUEZONAVE];
+extern const char* SEGMENTS_ESPANA[NUM_SEGMENT_ESPANA];
+extern const char* SEGMENTS_ROXAS[NUM_SEGMENT_ROXAS];
+extern const char* SEGMENTS_SLEX[NUM_SEGMENT_SLEX];
+extern const char* SEGMENTS_MARCOSHWY[NUM_SEGMENT_MARCOSHWY];
 
-const char** get_segments(int highway);
-int get_segment_count(int highway);
+extern const char** SEGMENTS[NUM_HIGHWAY];
+extern const int SEGMENT_COUNT[NUM_HIGHWAY];
+
+extern const char* VOLUMES[];
+
+extern unsigned char SEGMENT_DATA[];
+
+Segment get_segment_data(int highway, int segment);

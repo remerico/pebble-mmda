@@ -1,57 +1,55 @@
 #include <pebble.h>
 #include "data.h"
 
-const char** get_segments(int highway) {
-  
-  switch (highway) {
-    case HIGHWAY_EDSA: 
-      return SEGMENTS_EDSA;
-    case HIGHWAY_C5:
-      return SEGMENTS_C5;
-    case HIGHWAY_ORTIGAS:
-      return SEGMENTS_ORTIGAS;
-    case HIGHWAY_COMMONWEALTH:
-      return SEGMENTS_COMMONWEALTH;
-    case HIGHWAY_QUEZONAVE:
-      return SEGMENTS_QUEZONAVE;
-    case HIGHWAY_ESPANA:
-      return SEGMENTS_ESPANA;
-    case HIGHWAY_ROXAS:
-      return SEGMENTS_ROXAS;
-    case HIGHWAY_SLEX:
-      return SEGMENTS_SLEX;
-    case HIGHWAY_MARCOSHWY:
-      return SEGMENTS_MARCOSHWY;
-    default: 
-      return 0;
-  }
-  
-}
+unsigned char SEGMENT_DATA[] = {1,3,0,0,2,2,0,0,2,2,2,2,0,0,0,0,0,0,0,0,2,2,3,2,3,1,3,0,3,0,3,2,3,0,3,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,0,3,0,0,0,0,3,2,3,2,0,0,0,0,0,0,3,0,3,0,2,3,2,3,2,3,3,3,3,2,3,2,3,0,0,1,2,2,2,2,1,1,0,0,0,0,2,2,2,2,2,1,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,2,2,0,2,1,2,0,0,0,0,0,2};
 
-int get_segment_count(int highway) {
+const char** SEGMENTS[NUM_HIGHWAY] = {
+  SEGMENTS_EDSA,
+  SEGMENTS_C5,
+  SEGMENTS_ORTIGAS,
+  SEGMENTS_COMMONWEALTH,
+  SEGMENTS_QUEZONAVE,
+  SEGMENTS_ESPANA,
+  SEGMENTS_ROXAS,
+  SEGMENTS_SLEX,
+  SEGMENTS_MARCOSHWY
+};
   
-  switch (highway) {
-    case HIGHWAY_EDSA: 
-      return NUM_SEGMENT_EDSA;
-    case HIGHWAY_C5:
-      return NUM_SEGMENT_C5;
-    case HIGHWAY_ORTIGAS:
-      return NUM_SEGMENT_ORTIGAS;
-    case HIGHWAY_COMMONWEALTH:
-      return NUM_SEGMENT_COMMONWEALTH;
-    case HIGHWAY_QUEZONAVE:
-      return NUM_SEGMENT_QUEZONAVE;
-    case HIGHWAY_ESPANA:
-      return NUM_SEGMENT_ESPANA;
-    case HIGHWAY_ROXAS:
-      return NUM_SEGMENT_ROXAS;
-    case HIGHWAY_SLEX:
-      return NUM_SEGMENT_SLEX;
-    case HIGHWAY_MARCOSHWY:
-      return NUM_SEGMENT_MARCOSHWY;
-    default: 
-      return 0;
+const int SEGMENT_COUNT[NUM_HIGHWAY] = {
+  NUM_SEGMENT_EDSA,
+  NUM_SEGMENT_C5,
+  NUM_SEGMENT_ORTIGAS,
+  NUM_SEGMENT_COMMONWEALTH,
+  NUM_SEGMENT_QUEZONAVE,
+  NUM_SEGMENT_ESPANA,
+  NUM_SEGMENT_ROXAS,
+  NUM_SEGMENT_SLEX,
+  NUM_SEGMENT_MARCOSHWY
+};
+
+const char* VOLUMES[] = {
+  "L",
+  "ML",
+  "M",
+  "MH",
+  "H"
+};
+
+Segment get_segment_data(int highway, int segment) {
+  
+  int offset = 0;
+  int i;
+  for (i = 0; i < highway; ++i) {
+    offset += SEGMENT_COUNT[i] * 2;
   }
+  
+  offset += (segment * 2);  // for north/south directions
+  
+  Segment seg = { SEGMENTS[highway][segment], 
+                 segment, 
+                 SEGMENT_DATA[offset], 
+                 SEGMENT_DATA[offset+1] };
+  return seg;
   
 }
   

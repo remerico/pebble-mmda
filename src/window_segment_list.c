@@ -25,7 +25,6 @@ static void destroy_ui(void) {
 
 
 static int highwayId;
-const char** segments;
 
 
 // A callback is used to specify the amount of sections of menu items
@@ -35,11 +34,11 @@ static uint16_t menu_get_num_sections_callback(MenuLayer *menu_layer, void *data
 }
 
 static uint16_t menu_get_num_rows_callback(MenuLayer *menu_layer, uint16_t section_index, void *data) {
-  return get_segment_count(highwayId);
+  return SEGMENT_COUNT[highwayId];
 }
 
 static void menu_draw_row_callback(GContext* ctx, const Layer *cell_layer, MenuIndex *cell_index, void *data) {
-  menu_cell_basic_draw(ctx, cell_layer, segments[cell_index->row], NULL, NULL);
+  menu_cell_basic_draw(ctx, cell_layer, SEGMENTS[highwayId][cell_index->row], NULL, NULL);
 }
 
 // Here we capture when a user selects a menu item
@@ -57,7 +56,6 @@ static void handle_window_unload(Window* window) {
 void show_window_segment_list(int highway) {
   
   highwayId = highway;
-  segments = get_segments(highwayId);
   
   initialise_ui();
   
