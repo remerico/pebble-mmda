@@ -1,0 +1,25 @@
+{
+    "appKeys": {
+        "command": 0,
+        "highway": 1,
+        "north": 3,
+        "segment": 2,
+        "south": 4
+    },
+    "capabilities": [
+        ""
+    ],
+    "companyName": "remerico",
+    "longName": "MMDA Traffic",
+    "projectType": "native",
+    "resources": {
+        "media": []
+    },
+    "shortName": "MMDA Traffic",
+    "uuid": "285e02e1-0548-43a7-877f-707825a64942",
+    "versionCode": 1,
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": false
+    }
+}
