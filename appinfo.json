@@ -1,7 +1,8 @@
 {
     "appKeys": {
-        "data": 0,
-        "error": 1
+        "command": 0,
+        "data": 1,
+        "error": 2
     },
     "capabilities": [
         ""

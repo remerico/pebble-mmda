@@ -1,6 +1,7 @@
 #pragma once
 
 #define NUM_HIGHWAY              9
+
 #define NUM_SEGMENT_EDSA         37
 #define NUM_SEGMENT_C5           19
 #define NUM_SEGMENT_ORTIGAS      15
@@ -10,6 +11,11 @@
 #define NUM_SEGMENT_ROXAS        0 /*12*/
 #define NUM_SEGMENT_SLEX         0 /*7*/
 #define NUM_SEGMENT_MARCOSHWY    0 /*7*/
+  
+#define SEGMENT_FRAME 2  // for north/south bound data
+#define LENGTH_SEGMENT_DATA ((NUM_SEGMENT_EDSA + NUM_SEGMENT_C5 + NUM_SEGMENT_ORTIGAS + \
+                             NUM_SEGMENT_COMMONWEALTH + NUM_SEGMENT_QUEZONAVE + NUM_SEGMENT_ESPANA + \
+                             NUM_SEGMENT_ROXAS + NUM_SEGMENT_SLEX + NUM_SEGMENT_MARCOSHWY) * SEGMENT_FRAME)
   
 #define HIGHWAY_EDSA         0
 #define HIGHWAY_C5           1
@@ -51,6 +57,6 @@ extern const int SEGMENT_COUNT[NUM_HIGHWAY];
 
 extern const char* VOLUMES[];
 
-extern unsigned char SEGMENT_DATA[];
+extern uint8_t SEGMENT_DATA[LENGTH_SEGMENT_DATA];
 
 Segment get_segment_data(int highway, int segment);

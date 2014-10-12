@@ -1,3 +1,5 @@
+// This code is used for the Node.js proxy server
+/*
 var express = require('express')
 var http = require('http');
 var xml2js = require('xml2js');
@@ -69,3 +71,4 @@ function parseItems(response) {
 	return { 'traffic' : traffic };
 
 }
+*/

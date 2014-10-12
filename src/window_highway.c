@@ -2,7 +2,7 @@
 #include <pebble.h>
 #include "data.h"
 #include "window_segment_list.h"
-  
+#include "window_loading.h"
 
 // BEGIN AUTO-GENERATED UI CODE; DO NOT MODIFY
 static Window *s_window;
@@ -25,24 +25,43 @@ static void destroy_ui(void) {
 // END AUTO-GENERATED UI CODE
 
 
-// A callback is used to specify the amount of sections of menu items
-// With this, you can dynamically add and remove sections
+// Number of sections
 static uint16_t menu_get_num_sections_callback(MenuLayer *menu_layer, void *data) {
-  return 1;
+  return 2;
 }
 
+// Number of rows per section
 static uint16_t menu_get_num_rows_callback(MenuLayer *menu_layer, uint16_t section_index, void *data) {
-  return NUM_HIGHWAY;
+  switch (section_index) {
+    case 0: return 1;
+    case 1: return NUM_HIGHWAY;
+    default: return 0;
+  }
 }
+//  layer_remove_from_parent(text_layer_get_layer(s_menulayer));
 
+// Draw row
 static void menu_draw_row_callback(GContext* ctx, const Layer *cell_layer, MenuIndex *cell_index, void *data) {
-  menu_cell_basic_draw(ctx, cell_layer, HIGHWAYS[cell_index->row].name, NULL, NULL);
+  switch (cell_index->section) {
+    case 0:
+      menu_cell_basic_draw(ctx, cell_layer, "Refresh", NULL, NULL);
+      break;
+    case 1:
+      menu_cell_basic_draw(ctx, cell_layer, HIGHWAYS[cell_index->row].name, NULL, NULL);
+      break;
+  }
 }
 
-// Here we capture when a user selects a menu item
-static void menu_select_callback(MenuLayer *menu_layer, MenuIndex *cell_index, void *data) {
-//   switch (cell_index->row) {
-  show_window_segment_list(cell_index->row);
+// Row click callback
+static void menu_select_callback(MenuLayer *menu_layer, MenuIndex *cell_index, void *data) {  
+  switch (cell_index->section) {
+    case 0:
+      show_window_loading();
+      break;
+    case 1:
+      show_window_segment_list(cell_index->row);
+      break;
+  }
 }
 
 
@@ -52,6 +71,8 @@ static void handle_window_unload(Window* window) {
 
 void show_window_highway(void) {
   initialise_ui();
+  
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "Highway menu initialized");
   
   menu_layer_set_callbacks(s_menulayer, NULL, (MenuLayerCallbacks){
     .get_num_sections = menu_get_num_sections_callback,

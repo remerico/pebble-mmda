@@ -1,13 +1,17 @@
 var URL_TRAFFIC = 'http://mmdatraffic.interaksyon.com/livefeed/';
 var URL_INCIDENTS = 'http://mmdainteraksyon.virusworldwide.com/mmdaalert.php';
-var URL_TRAFFIC_JS 'http://vast-bayou-2822.herokuapp.com/';
+var URL_TRAFFIC_JS = 'http://vast-bayou-2822.herokuapp.com/';
+
+var COMMAND_READY = 1;
+var COMMAND_DATA = 2;
 
 var VOLUME = {
-  L  : 0,
-  ML : 1,
-  M  : 2,
-  MH : 3,
-  H  : 4
+  NA : 0,    // no data
+  L  : 1,
+  ML : 2,
+  M  : 3,
+  MH : 4,
+  H  : 5
 }
 
 var DIRECTIONS = [
@@ -21,7 +25,7 @@ var HIGHWAY_DATA = [
     segments : [
       'BALINTAWAK',
       'KAINGIN_ROAD',
-      'MUñOZ',
+      'MU\u00F1OZ',
       'BANSALANGIN',
       'NORTH_AVE.',
       'TRINOMA',
@@ -147,18 +151,21 @@ var HIGHWAY_IDS = {
 
 
 function fetchTraffic() {
+  console.log('fetchTraffic');
   
   fetchData(URL_TRAFFIC_JS, function(data) {
     
-      var result = {};
+      var result = { command : COMMAND_DATA };
     
       if (data != null) {
-        result.traffic = parseTrafficData(data.traffic);
+        result.data = parseTrafficData(data.traffic);
         result.error = 0;
       }
       else {
         result.error = 1;
       }
+    
+      console.log('send app msg!');
     
       Pebble.sendAppMessage(result);
     
@@ -173,17 +180,20 @@ function fetchData(url, callback) {
   
   req.open('GET', url, true);
   req.onload = function(e) {
+    console.log('fetchData: onload()');
     if (req.readyState == 4 && req.status == 200) {
-      callback(req.responseText);
+      callback(JSON.parse(req.responseText));
     }
     else {
       callback(null);
     }
   };
   req.onerror = function(e) {
+    console.log('fetchData: onerror()');
     callback(null);
   };
   req.timeout = function(e) {
+    console.log('fetchData: timeout()');
     callback(null);
   };
   
@@ -206,7 +216,21 @@ function parseTrafficData(data) {
       
       for (var k in DIRECTIONS) {
         var dir = DIRECTIONS[k];
-        result.push(VOLUME[data[highway_data.name][segname][dir]]);
+        
+        //console.log('Push: ' + highway_data.name + " -> " + segname + " -> " + dir);
+        
+        if (data[highway_data.name] && 
+            data[highway_data.name][segname] &&
+            data[highway_data.name][segname][dir]) {
+
+            result.push(VOLUME[data[highway_data.name][segname][dir]]);
+            //console.log('  data found. pushing..')
+        }
+        else {     
+          result.push(0);
+          //console.log('  data NOT found. pushing no data..')
+        }
+        
       }
       
     }
@@ -220,9 +244,11 @@ function parseTrafficData(data) {
 
 Pebble.addEventListener("ready", function(e) {
   console.log('JS is ready!');
+  Pebble.sendAppMessage({ command : COMMAND_READY });
 });
 
 // Called when incoming message from the Pebble is received
 Pebble.addEventListener("appmessage", function(e) {
+  console.log('App message received');
   fetchTraffic();
 });
