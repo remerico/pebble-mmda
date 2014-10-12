@@ -5,9 +5,9 @@
 #define NUM_SEGMENT_EDSA         37
 #define NUM_SEGMENT_C5           19
 #define NUM_SEGMENT_ORTIGAS      15
-#define NUM_SEGMENT_COMMONWEALTH 0 /*12*/
-#define NUM_SEGMENT_QUEZONAVE    0 /*25*/
-#define NUM_SEGMENT_ESPANA       0 /*8*/
+#define NUM_SEGMENT_COMMONWEALTH 12
+#define NUM_SEGMENT_QUEZONAVE    25
+#define NUM_SEGMENT_ESPANA       8
 #define NUM_SEGMENT_ROXAS        0 /*12*/
 #define NUM_SEGMENT_SLEX         0 /*7*/
 #define NUM_SEGMENT_MARCOSHWY    0 /*7*/

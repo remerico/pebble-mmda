@@ -20,7 +20,7 @@ var DIRECTIONS = [
 
 var HIGHWAY_DATA = [
   {
-    id : 1,
+    id : 0,
     name : 'EDSA',
     segments : [
       'BALINTAWAK',
@@ -63,7 +63,7 @@ var HIGHWAY_DATA = [
     ]
   },
   {
-    id : 2,
+    id : 1,
     name : 'C5',
     segments : [
       'TANDANG_SORA',
@@ -88,7 +88,7 @@ var HIGHWAY_DATA = [
     ]
   },
   {
-    id : 3,
+    id : 2,
     name : 'ORTIGAS',
     segments : [
         'SANTOLAN',
@@ -109,14 +109,67 @@ var HIGHWAY_DATA = [
     ]
   },
   {
-    id : 4,
+    id : 3,
     name : 'COMMONWEALTH',
-    segments : []
+    segments : [
+      'BATASAN',
+      'ST._PETER\'S_CHURCH',
+      'EVER_GOTESCO',
+      'DILIMAN_PREPARATORY_SCHOOL',
+      'ZUZUAREGI',
+      'GENERAL_MALVAR_HOSPITAL',
+      'TANDANG_SORA_EASTSIDE',
+      'TANDANG_SORA_WESTSIDE',
+      'CENTRAL_AVE',
+      'MAGSAYSAY_AVE',
+      'UNIVERSITY_AVE',
+      'PHILCOA'
+    ]
+  },
+  {
+    id : 4,
+    name : "QUEZON_AVE.",
+    segments: [
+      'ELLIPTICAL_ROAD',
+      'AGHAM_ROAD',
+      'BANTAYOG_ROAD',
+      'EDSA',
+      'SGT._ESGUERA',
+      'SCOUT_ALBANO',
+      'SCOUT_BORROMEO',
+      'SCOUT_SANTIAGO',
+      'TIMOG',
+      'SCOUT_REYES',
+      'SCOUT_MAGBANUA',
+      'ROCES_AVENUE',
+      'ROOSEVELT_AVENUE',
+      'DR._GARCIA_SR.',
+      'SCOUT_CHUATOCO',
+      'G._ARANETA_AVE.',
+      'STO._DOMINGO',
+      'BIAK_NA_BATO',
+      'BANAWE',
+      'CORDILLERA',
+      'D._TUAZON',
+      'SPEAKER_PEREZ',
+      'APO_AVENUE',
+      'KANLAON',
+      'MAYON'
+    ]
   },
   {
     id : 5,
-    name : 'ESPAÑA',
-    segments : []
+    name : 'ESPA\u00D1A',
+    segments : [
+      'LERMA',
+      'P.NOVAL',
+      'GOV._FORBES_-_LACSON',
+      'VICENTE_CRUZ',
+      'ANTIPOLO',
+      'A._MACEDA',
+      'BLUEMENTRITT',
+      'WELCOME_ROTUNDA'
+    ]
   },
   {
     id : 6,

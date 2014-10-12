@@ -150,12 +150,57 @@ const char* SEGMENTS_ORTIGAS[] = {
 };
 
 const char* SEGMENTS_COMMONWEALTH[] = {
+  "Batasan",
+  "St. Peter's Church",
+  "Ever Gotesco",
+  "Diliman Preparatory School",
+  "Zuzuaregi",
+  "General Malvar Hospital",
+  "Tandang Sora Eastside",
+  "Tandang Sora Westside",
+  "Central Ave",
+  "Magsaysay Ave",
+  "University Ave",
+  "Philcoa"
 };
 
 const char* SEGMENTS_QUEZONAVE[] = {
+  "Elliptical Road",
+  "Agham Road",
+  "Bantayog Road",
+  "EDSA",
+  "Sgt. Esguerra",
+  "Scout Albano",
+  "Scout Borromeo",
+  "Scout Santiago",
+  "Timog",
+  "Scout Reyes",
+  "Scout Magbanua",
+  "Roces Avenue",
+  "Roosevelt Avenue",
+  "Dr. Garcia Sr.",
+  "Scout Chuatoco",
+  "G. Araneta Ave.",
+  "Sto. Domingo",
+  "Biak na Bato",
+  "Banawe",
+  "Cordillera",
+  "D. Tuazon",
+  "Speaker Perez",
+  "Apo Avenue",
+  "Kanlaon",
+  "Mayon"
 };
 
 const char* SEGMENTS_ESPANA[] = {
+  "Lerma",
+  "P. Noval",
+  "Gov. Forbes - Lacson",
+  "Vicente Cruz",
+  "Antipolo",
+  "A. Maceda",
+  "Blumentritt",
+  "Welcome Rotonda"
 };
 
 const char* SEGMENTS_ROXAS[] = {
