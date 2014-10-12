@@ -7,11 +7,18 @@
     "capabilities": [
         ""
     ],
-    "companyName": "remerico",
+    "companyName": "Remerico",
     "longName": "MMDA Traffic",
     "projectType": "native",
     "resources": {
-        "media": []
+        "media": [
+            {
+                "file": "images/icon_menu.png",
+                "menuIcon": true,
+                "name": "icon_menu",
+                "type": "png"
+            }
+        ]
     },
     "shortName": "MMDA Traffic",
     "uuid": "285e02e1-0548-43a7-877f-707825a64942",
