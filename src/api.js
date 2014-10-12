@@ -174,17 +174,46 @@ var HIGHWAY_DATA = [
   {
     id : 6,
     name : 'ROXAS_BLVD.',
-    segments : []
+    segments : [
+      'ANDA_CIRCLE',
+      'FINANCE_ROAD',
+      'U.N._AVENUE',
+      'PEDRO_GIL',
+      'RAJAH_SULAYMAN',
+      'QUIRINO',
+      'PABLO_OCAMPO',
+      'BUENDIA',
+      'EDSA_EXTENSION',
+      'BACLARAN',
+      'AIRPORT_ROAD',
+      'COASTAL_ROAD'
+    ]
   },
   {
     id : 7,
     name : 'SLEX',
-    segments : []
+    segments : [
+      'MAGALLANES',
+      'NICHOLS',
+      'MERVILLE_EXIT',
+      'C5_ON-RAMP',
+      'BICUTAN_EXIT',
+      'SUCAT_EXIT',
+      'ALABANG_EXIT'
+    ]
   },
   {
     id : 8,
     name : 'MARCOS_HIGHWAY',
-    segments : []
+    segments : [
+      'SM_CITY_MARIKINA',
+      'LRT-2_STATION',
+      'DONA_JUANA',
+      'AMANG_RODRIGUEZ',
+      'F._MARIANO_AVE',
+      'ROBINSON\'S_METRO_EAST',
+      'SAN_BENILDO_SCHOOL'
+    ]
   }
 ];
 

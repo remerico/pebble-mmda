@@ -8,9 +8,9 @@
 #define NUM_SEGMENT_COMMONWEALTH 12
 #define NUM_SEGMENT_QUEZONAVE    25
 #define NUM_SEGMENT_ESPANA       8
-#define NUM_SEGMENT_ROXAS        0 /*12*/
-#define NUM_SEGMENT_SLEX         0 /*7*/
-#define NUM_SEGMENT_MARCOSHWY    0 /*7*/
+#define NUM_SEGMENT_ROXAS        12
+#define NUM_SEGMENT_SLEX         7
+#define NUM_SEGMENT_MARCOSHWY    7
   
 #define SEGMENT_FRAME 2  // for north/south bound data
 #define LENGTH_SEGMENT_DATA ((NUM_SEGMENT_EDSA + NUM_SEGMENT_C5 + NUM_SEGMENT_ORTIGAS + \

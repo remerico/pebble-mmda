@@ -204,12 +204,38 @@ const char* SEGMENTS_ESPANA[] = {
 };
 
 const char* SEGMENTS_ROXAS[] = {
+  "Anda Circle",
+  "Finance Road",
+  "U.N. Avenue",
+  "Pedro Gil",
+  "Rajah Sulayman",
+  "Quirino",
+  "Pablo Ocampo",
+  "Buendia",
+  "EDSA Extension",
+  "Baclaran",
+  "Airport Road",
+  "Coastal Road"
 };
 
 const char* SEGMENTS_SLEX[] = {
+  "Magallanes",
+  "Nichols",
+  "Merville Exit",
+  "C5 On-ramp",
+  "Bicutan Exit",
+  "Sucat Exit",
+  "Alabang Exit"
 };
 
 const char* SEGMENTS_MARCOSHWY[] = {
+  "SM City Marikina",
+  "LRT-2 Station",
+  "Doña Juana",
+  "Amang Rodriguez",
+  "F. Mariano Ave.",
+  "Robinson's Metro East",
+  "San Benildo School"
 };
 
 
