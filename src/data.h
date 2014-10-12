@@ -60,3 +60,5 @@ extern const char* VOLUMES[];
 extern uint8_t SEGMENT_DATA[LENGTH_SEGMENT_DATA];
 
 Segment get_segment_data(int highway, int segment);
+bool data_is_loaded();
+bool data_set_data(uint8_t *data, int length);

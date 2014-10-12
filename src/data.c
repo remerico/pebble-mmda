@@ -1,6 +1,8 @@
 #include <pebble.h>
 #include "data.h"
 
+static bool is_loaded = false;
+  
 uint8_t SEGMENT_DATA[LENGTH_SEGMENT_DATA] = {1,3,0,0,2,2,0,0,2,2,2,2,0,0,0,0,0,0,0,0,2,2,3,2,3,1,3,0,3,0,3,2,3,0,3,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,0,3,0,0,0,0,3,2,3,2,0,0,0,0,0,0,3,0,3,0,2,3,2,3,2,3,3,3,3,2,3,2,3,0,0,1,2,2,2,2,1,1,0,0,0,0,2,2,2,2,2,1,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,2,2,0,2,1,2,0,0,0,0,0,2};
 
 const char** SEGMENTS[NUM_HIGHWAY] = {
@@ -165,3 +167,27 @@ const char* SEGMENTS_SLEX[] = {
 const char* SEGMENTS_MARCOSHWY[] = {
 };
 
+
+bool data_is_loaded() {
+  return is_loaded;
+}
+
+bool data_set_data(uint8_t *data, int length) {
+
+  if (LENGTH_SEGMENT_DATA == length) {
+
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "Data has correct length");
+
+    // Copy to segment data array
+    memcpy(&SEGMENT_DATA, data, length);
+    is_loaded = true;
+    
+    return true;
+
+  }
+  else {
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "Data has INCORRECT length");
+    return false;
+  }
+  
+}

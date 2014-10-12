@@ -36,6 +36,10 @@ static void refresh_data() {
   }
 }
 
+static void handle_api_ready() {
+  refresh_data();
+}
+
 static void handle_api_received(uint8_t *data, int length) {
   is_loading = false;
   hide_window_loading();
@@ -44,6 +48,14 @@ static void handle_api_received(uint8_t *data, int length) {
 static void handle_api_failed() {
   is_loading = false;
   text_layer_set_text(s_textlayer_1, "Loading failed. Please try again :(");
+}
+
+static void handle_back_button(ClickRecognizerRef recognizer, void *context) {
+  // Disable back button to prevent dimissing while loading. Teehee
+}
+
+static void handle_config_provider(Window *window) {
+  window_single_click_subscribe(BUTTON_ID_BACK, handle_back_button);
 }
 
 static void handle_window_unload(Window* window) {
@@ -57,16 +69,22 @@ void show_window_loading(void) {
   
   api_set_callbacks((ApiCallbacks){
     .received = handle_api_received,
-    .failed = handle_api_failed
+    .failed = handle_api_failed,
+    .ready = handle_api_ready
   });
   
   window_set_window_handlers(s_window, (WindowHandlers) {
     .unload = handle_window_unload,
   });
   
+  window_set_click_config_provider(s_window, (ClickConfigProvider) handle_config_provider);
+
+  
   window_stack_push(s_window, true);
   
-  refresh_data();
+  if (api_is_ready()) {
+    refresh_data();
+  }
 }
 
 void hide_window_loading(void) {

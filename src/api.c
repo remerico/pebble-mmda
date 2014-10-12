@@ -10,10 +10,7 @@
 #define COMMAND_DATA 2
   
 static ApiCallbacks api_callbacks;
-static ApiReadyCallback ready_callback;
-static bool is_loaded = false;
-  
-
+static bool is_ready = false;  
 
 static void handle_message_data(DictionaryIterator *received) {
   
@@ -29,28 +26,16 @@ static void handle_message_data(DictionaryIterator *received) {
     uint8_t* data = tup_data->value->data;
     int length = tup_data->length;
     
-    if (LENGTH_SEGMENT_DATA == length) {
-    
-      APP_LOG(APP_LOG_LEVEL_DEBUG, "Data has correct length");
-      
-      // Copy to segment data array
-      memcpy(&SEGMENT_DATA, data, length);
-      
-      is_loaded = true;
-      
+    if (data_set_data(data, length)) {
       if (api_callbacks.received != NULL) {
         api_callbacks.received(data, length);
-      }
-    
+      }    
     }
     else {
-      APP_LOG(APP_LOG_LEVEL_DEBUG, "Data has INCORRECT length");
-      
       if (api_callbacks.failed != NULL) {
         api_callbacks.failed();
       }
     }
-    
     
 	}
   else {
@@ -71,7 +56,8 @@ static void message_received_callback(DictionaryIterator *received, void *contex
   
   switch (command) {
     case COMMAND_READY:
-      if (ready_callback != NULL) ready_callback();
+      is_ready = true;
+      if (api_callbacks.ready != NULL) api_callbacks.ready();
       break;
     
     case COMMAND_DATA:
@@ -127,7 +113,8 @@ void api_set_callbacks(ApiCallbacks cb) {
 void api_unset_callbacks() {
   api_callbacks = (ApiCallbacks){
     .received = NULL,
-    .failed = NULL
+    .failed = NULL,
+    .ready = NULL
   };
 }
 
@@ -144,10 +131,7 @@ void api_refresh_data() {
   app_message_outbox_send();
 }
 
-bool api_is_loaded() {
-  return is_loaded;
+bool api_is_ready() {
+  return is_ready;
 }
 
-void api_set_ready_callback(ApiReadyCallback callback) {
-  ready_callback = callback;
-}
