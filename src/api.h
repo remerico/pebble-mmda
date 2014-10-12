@@ -1,13 +1,15 @@
 #pragma once
   
 typedef void (*DataReceivedCallback)(uint8_t *data, int length);
-typedef void (*DataFailedCallback)();
+typedef void (*DataFailedCallback)(char *message);
 typedef void (*ApiReadyCallback)();
+typedef void (*ApiLoadingCallback)();
 
 typedef struct {
   DataReceivedCallback received;
   DataFailedCallback failed;
   ApiReadyCallback ready;
+  ApiLoadingCallback loading;
 } ApiCallbacks;
 
   

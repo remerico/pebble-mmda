@@ -1,6 +1,7 @@
 #include "window_loading.h"
 #include <pebble.h>
 #include "api.h"
+#include "window_error.h"
 
 // BEGIN AUTO-GENERATED UI CODE; DO NOT MODIFY
 static Window *s_window;
@@ -27,31 +28,7 @@ static void destroy_ui(void) {
 // END AUTO-GENERATED UI CODE
 
 
-static bool is_loading = false;
-
-static void refresh_data() {
-  if (!is_loading) {
-    is_loading = true;
-    api_refresh_data();
-  }
-}
-
-static void handle_api_ready() {
-  refresh_data();
-}
-
-static void handle_api_received(uint8_t *data, int length) {
-  is_loading = false;
-  hide_window_loading();
-}
-
-static void handle_api_failed() {
-  is_loading = false;
-  text_layer_set_text(s_textlayer_1, "Loading failed. Please try again :(");
-}
-
 static void handle_back_button(ClickRecognizerRef recognizer, void *context) {
-  // Disable back button to prevent dimissing while loading. Teehee
 }
 
 static void handle_config_provider(Window *window) {
@@ -60,18 +37,11 @@ static void handle_config_provider(Window *window) {
 
 static void handle_window_unload(Window* window) {
   destroy_ui();
-  api_unset_callbacks();
 }
 
 void show_window_loading(void) {
   
   initialise_ui();
-  
-  api_set_callbacks((ApiCallbacks){
-    .received = handle_api_received,
-    .failed = handle_api_failed,
-    .ready = handle_api_ready
-  });
   
   window_set_window_handlers(s_window, (WindowHandlers) {
     .unload = handle_window_unload,
@@ -79,12 +49,8 @@ void show_window_loading(void) {
   
   window_set_click_config_provider(s_window, (ClickConfigProvider) handle_config_provider);
 
-  
   window_stack_push(s_window, true);
-  
-  if (api_is_ready()) {
-    refresh_data();
-  }
+    
 }
 
 void hide_window_loading(void) {

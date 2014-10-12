@@ -1,8 +1,8 @@
 #include "window_highway.h"
 #include <pebble.h>
 #include "data.h"
+#include "api.h"
 #include "window_segment_list.h"
-#include "window_loading.h"
 
 // BEGIN AUTO-GENERATED UI CODE; DO NOT MODIFY
 static Window *s_window;
@@ -56,7 +56,7 @@ static void menu_draw_row_callback(GContext* ctx, const Layer *cell_layer, MenuI
 static void menu_select_callback(MenuLayer *menu_layer, MenuIndex *cell_index, void *data) {  
   switch (cell_index->section) {
     case 0:
-      show_window_loading();
+      api_refresh_data();
       break;
     case 1:
       show_window_segment_list(cell_index->row);
