@@ -32,9 +32,9 @@ const int SEGMENT_COUNT[NUM_HIGHWAY] = {
 const char* VOLUMES[] = {
   "N/A",
   "Low",
-  "ML",
+  "L-M",
   "Med",
-  "MH",
+  "M-H",
   "Hi"
 };
 
