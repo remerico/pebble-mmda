@@ -5,6 +5,7 @@
 #define KEY_COMMAND 0
 #define KEY_DATA 1
 #define KEY_ERROR 2
+#define KEY_REFRESH 3
   
 #define COMMAND_READY 1
 #define COMMAND_DATA 2
@@ -14,7 +15,7 @@ static bool is_ready = false;
 
 // Forward declaration. 'cuz you know. :P
 static void open_message();
-static void send_refresh_message();
+static void send_refresh_message(bool force_refresh);
 
 
 static void handle_message_data(DictionaryIterator *received) {
@@ -62,7 +63,7 @@ static void message_received_callback(DictionaryIterator *received, void *contex
   switch (command) {
     case COMMAND_READY:
       is_ready = true;
-      send_refresh_message();
+      send_refresh_message(false);
       break;
     
     case COMMAND_DATA:
@@ -128,13 +129,13 @@ static void open_message() {
   
 }
 
-static void send_refresh_message() {
+static void send_refresh_message(bool force_refresh) {
 
   DictionaryIterator *iter;
 	
 	app_message_outbox_begin(&iter);	
 
-  dict_write_uint8(iter, KEY_DATA, 1);
+  dict_write_uint8(iter, KEY_REFRESH, force_refresh ? 1 : 0);
   
 	dict_write_end(iter);
   	
@@ -179,7 +180,7 @@ void api_refresh_data() {
   }
   else {
     if (api_callbacks.loading != NULL) api_callbacks.loading();
-    send_refresh_message();
+    send_refresh_message(true);
   }
   
 }

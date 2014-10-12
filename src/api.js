@@ -9,6 +9,8 @@ var xmlParser;   // we'll initialize this in Pebble ready()
 var URL_TRAFFIC = 'http://mmdatraffic.interaksyon.com/livefeed/';
 var URL_INCIDENTS = 'http://mmdainteraksyon.virusworldwide.com/mmdaalert.php';
 var URL_TRAFFIC_JS = 'http://vast-bayou-2822.herokuapp.com/';
+  
+var KEY_STORE_DATA = 'data';
 
 var COMMAND_READY = 1;
 var COMMAND_DATA = 2;
@@ -239,15 +241,15 @@ var HIGHWAY_IDS = {
 }
 
 
-function fetchTraffic() {
-  console.log('fetchTraffic');
+function fetchTraffic(forceRefresh) {
+  console.log('fetchTraffic : ' + forceRefresh);
   
-  fetchData(URL_TRAFFIC, function(data) {
+  fetchData(forceRefresh, URL_TRAFFIC, function(data) {
     
       var result = { command : COMMAND_DATA };
     
       if (data != null) {
-        result.data = parseTrafficData(data.traffic);
+        result.data = convertTrafficByteArray(data.traffic);
         result.error = 0;
       }
       else {
@@ -263,9 +265,28 @@ function fetchTraffic() {
 }
 
 
-function fetchData(url, callback) {
+function fetchData(forceRefresh, url, callback) {
+  
+  console.log('fetchData...');
+  
+  // get cached data if not forced to refresh
+  if (!forceRefresh) {
+  
+    try {  
+      var trafficData = JSON.parse(localStorage.getItem(KEY_STORE_DATA));
+      if (trafficData != null) {
+        console.log('cached data found, using that..');
+        callback(trafficData);
+        return;
+      }
+    }
+    catch (e) { }
+    
+  }
     
   var req = new XMLHttpRequest();
+  
+  console.log('open xmlhttprequest!');
   
   req.open('GET', url, true);
   req.onload = function(e) {
@@ -273,7 +294,14 @@ function fetchData(url, callback) {
     if (req.readyState == 4 && req.status == 200) {
       // parse xml and convert to JSON
       xmlParser.parseString(req.responseText, function(err, result) {
-        callback(convertItems(result));  
+        var trafficData = parseTrafficData(result);
+        
+        if (trafficData != null) {
+          console.log('saving data to cache...');
+          localStorage.setItem(KEY_STORE_DATA, JSON.stringify(trafficData));
+        }
+        
+        callback(trafficData);  
       });
     }
     else {
@@ -294,7 +322,7 @@ function fetchData(url, callback) {
 }
 
 
-function parseTrafficData(data) {
+function convertTrafficByteArray(data) {
   
   var result = [];
   
@@ -334,7 +362,7 @@ function parseTrafficData(data) {
 }
 
 
-function convertItems(response) {
+function parseTrafficData(response) {
   
   try {
 
@@ -362,10 +390,14 @@ function convertItems(response) {
 
     }
 
-    return { 'traffic' : traffic };
+    return { 
+      'traffic' : traffic,
+      'lastUpdated' : new Date().getTime() / 1000
+    };
     
   }
   catch (e) {
+    console.log("error parsing data..." + e.message);
     return null;
   }
 
@@ -382,7 +414,8 @@ Pebble.addEventListener("ready", function(e) {
 // Called when incoming message from the Pebble is received
 Pebble.addEventListener("appmessage", function(e) {
   console.log('App message received');
-  fetchTraffic();
+  var refresh = e.payload.refresh;
+  fetchTraffic(refresh);
 });
   
 

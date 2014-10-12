@@ -2,7 +2,8 @@
     "appKeys": {
         "command": 0,
         "data": 1,
-        "error": 2
+        "error": 2,
+        "refresh": 3
     },
     "capabilities": [
         ""
