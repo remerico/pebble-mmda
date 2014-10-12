@@ -31,11 +31,11 @@ const int SEGMENT_COUNT[NUM_HIGHWAY] = {
 
 const char* VOLUMES[] = {
   "N/A",
-  "L",
+  "Low",
   "ML",
-  "M",
+  "Med",
   "MH",
-  "H"
+  "Hi"
 };
 
 Segment get_segment_data(int highway, int segment) {
